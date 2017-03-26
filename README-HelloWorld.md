@@ -36,9 +36,9 @@
 
 ```
 
-##开始HelloWorld
+## 开始HelloWorld
 
-###一个错误的示例
+### 一个错误的示例
 我们需要一个main作为入口来启动我们的项目,但这里我们需要注意我们启动的主类不能放在default包下,
 不然会遇到很多莫名的问题,比如下面这个:
 ```$xslt
@@ -74,7 +74,7 @@ public class HelloWorldApp2 {
 
 }
 ```
-###启动项目
+### 启动项目
 我们只需要启动main方法就可以在浏览器访问localhost:8080/hello,当然我们也可以使用maven命令来启动,我们需要添加下面的插件
 ```$xslt
    <build>
