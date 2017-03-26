@@ -1,6 +1,8 @@
 # SpringBoot学习--HellWorld
+
 ## 引入pom依赖
---1. spring-boot-starter-parent可以提供依赖管理,引入以后其它的的starter依赖就可以不用配置版本号.
+
++ 1.spring-boot-starter-parent可以提供依赖管理,引入以后其它的的starter依赖就可以不用配置版本号.
 ```$xslt
   <parent>
         <groupId>org.springframework.boot</groupId>
@@ -23,7 +25,7 @@
         </dependencies>
     </dependencyManagement>
 ```
---2.spring-boot-starter-web提供了webmvc,tomcat等web开发相关模块
++ 2.spring-boot-starter-web提供了webmvc,tomcat等web开发相关模块
 ```$xslt
 <dependencies>  
     <dependency>  
@@ -33,7 +35,9 @@
   </dependencies>  
 
 ```
+
 ##开始HelloWorld
+
 ###一个错误的示例
 我们需要一个main作为入口来启动我们的项目,但这里我们需要注意我们启动的主类不能放在default包下,
 不然会遇到很多莫名的问题,比如下面这个:
