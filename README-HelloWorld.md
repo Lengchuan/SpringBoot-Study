@@ -47,7 +47,7 @@
 
 org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [HelloWorldAppTest1]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'errorPageFilter' for bean class [org.springframework.boot.web.support.ErrorPageFilter] conflicts with existing, non-compatible bean definition of same name and class [org.springframework.boot.context.web.ErrorPageFilter]
 ```
-###编写我们的第一个HelloWorld
+### 编写我们的第一个HelloWorld
 ```$xslt
 @SpringBootApplication
 @RestController
