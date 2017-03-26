@@ -38,3 +38,9 @@ local.properties
 .scala_dependencies
 .worksheet
 将删除 .idea/
+将删除 SpringBoot-HelloWorld/HelloWorld1.iml
+将删除 SpringBoot-HelloWorld/src/main/java/com/
+将删除 SpringBoot-HelloWorld/src/main/resources/
+将删除 SpringBoot-HelloWorld/src/test/
+将删除 SpringBoot-HelloWorld/target/
+将删除 target/
