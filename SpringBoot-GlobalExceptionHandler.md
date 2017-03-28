@@ -1,6 +1,6 @@
 # SpingBoot全局异常处理
 
-## controllerAdvice()注解
+## @controllerAdvice()注解
 + 1.@ControllerAdvice()注解可以定义一个统一的异常处理类,我们可以定义多个统一异常处理类,
     但这里我们需要注意一点,默认的@ControllerAdvice()会处理所有的controller层抛出的异常,
     如果我们需要对不同的包进行不同的异常处理,比如pc端我们要返回一个jsp页面,app端我们需要返回
