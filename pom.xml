@@ -12,6 +12,7 @@
         <module>SpringBoot-HelloWorld-1</module>
         <module>SpringBoot-HelloWorld-2</module>
         <module>SpringBoot-GlobalExceptionHandler</module>
+        <module>SpringBoot-FastJson</module>
     </modules>
 
 </project>
