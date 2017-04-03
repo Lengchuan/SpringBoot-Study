@@ -13,6 +13,7 @@
         <module>SpringBoot-HelloWorld-2</module>
         <module>SpringBoot-GlobalExceptionHandler</module>
         <module>SpringBoot-FastJson</module>
+        <module>SpringBoot-JuintTest</module>
     </modules>
 
 </project>
