@@ -14,6 +14,7 @@
         <module>SpringBoot-GlobalExceptionHandler</module>
         <module>SpringBoot-FastJson</module>
         <module>SpringBoot-JuintTest</module>
+        <module>SpringBoot-Mybatis</module>
     </modules>
 
 </project>

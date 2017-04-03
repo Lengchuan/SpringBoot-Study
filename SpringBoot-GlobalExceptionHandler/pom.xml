@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>groupId</groupId>
+    <groupId>com.lc</groupId>
     <artifactId>SpringBoot-GlobalExceptionHandler</artifactId>
     <packaging>jar</packaging>
 
