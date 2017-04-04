@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lc.springBoot.mapper.UserMapper">
+
+    <insert id="insert" parameterType="com.lc.springBoot.model.User">
+        <selectKey resultType="java.lang.Integer" keyProperty="userId" keyColumn="userId">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into user(name,email,age,birthday) values(#{name},#{email},#{age},#{birthday})
+    </insert>
+
+    <select id="getById" resultType="com.lc.springBoot.model.User">
+        select * from user where userId = #{userId}
+    </select>
+    <select id="getBypage" resultType="com.lc.springBoot.model.User">
+        SELECT * FROM user
+    </select>
+</mapper>

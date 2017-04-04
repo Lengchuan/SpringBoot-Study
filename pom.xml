@@ -15,6 +15,7 @@
         <module>SpringBoot-FastJson</module>
         <module>SpringBoot-JuintTest</module>
         <module>SpringBoot-Mybatis</module>
+        <module>SpringBoot-Druid</module>
     </modules>
 
 </project>
