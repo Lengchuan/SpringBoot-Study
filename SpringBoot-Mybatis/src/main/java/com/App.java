@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 17-4-4
  */
 @SpringBootApplication
-//@MapperScan(value = "com.lc.springBoot.mapper")//需要扫描的mapper接口所在包
+//@MapperScan(value = "com.lc.springBoot.druid.mapper")//需要扫描的mapper接口所在包
 public class App {
 
     public static void main(String[] args) {

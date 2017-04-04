@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lc.springBoot.mapper.master.UserMapper1">
+<mapper namespace="com.lc.springBoot.druid.mapper.master.StudentMapper">
 
     <insert id="insert" parameterType="com.lc.springBoot.druid.model.Student">
-        <selectKey resultType="java.lang.Integer" keyProperty="userId" keyColumn="userId">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" keyColumn="id">
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into student(name,email,age,birthday) values(#{name},#{email},#{age},#{birthday})
     </insert>
 
     <select id="getById" resultType="com.lc.springBoot.druid.model.Student">
-        select * from student where userId = #{userId}
+        select * from student where id = #{id}
     </select>
     <select id="getBypage" resultType="com.lc.springBoot.druid.model.Student">
         SELECT * FROM student

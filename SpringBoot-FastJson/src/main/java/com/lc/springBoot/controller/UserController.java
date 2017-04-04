@@ -1,7 +1,7 @@
 package com.lc.springBoot.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.lc.springBoot.model.User;
+import com.lc.springBoot.druid.model.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -16,10 +16,10 @@ Date: 2017-04-04 18:07:51
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for user
+-- Table structure for student
 -- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
+DROP TABLE IF EXISTS `student`;
+CREATE TABLE `student` (
   `userId` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   `email` varchar(64) NOT NULL DEFAULT '',
@@ -29,8 +29,8 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of user
+-- Records of student
 -- ----------------------------
-INSERT INTO `user` VALUES ('3', 'test1', 'test@test.com', '1', '2017-04-04 02:54:18');
-INSERT INTO `user` VALUES ('4', 'test1', 'test@test.com', '1', '2017-04-04 02:56:19');
-INSERT INTO `user` VALUES ('8', 'test1', 'test@test.com', '1', '2017-04-04 03:59:13');
+INSERT INTO `student` VALUES ('3', 'test1', 'test@test.com', '1', '2017-04-04 02:54:18');
+INSERT INTO `student` VALUES ('4', 'test1', 'test@test.com', '1', '2017-04-04 02:56:19');
+INSERT INTO `student` VALUES ('8', 'test1', 'test@test.com', '1', '2017-04-04 03:59:13');

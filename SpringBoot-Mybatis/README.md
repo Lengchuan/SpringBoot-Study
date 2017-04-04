@@ -85,7 +85,7 @@ public class MybatisConfig {
 ```
 ```aidl
 @SpringBootApplication
-@MapperScan(value = "com.lc.springBoot.mapper")//需要扫描的mapper接口所在包
+@MapperScan(value = "com.lc.springBoot.druid.mapper")//需要扫描的mapper接口所在包
 public class App {
 
     public static void main(String[] args) {
@@ -105,7 +105,7 @@ public class App {
         @Bean
         public MapperScannerConfigurer mapperScannerConfigurer() {
             MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-            mapperScannerConfigurer.setBasePackage("com.lc.springBoot.mapper");
+            mapperScannerConfigurer.setBasePackage("com.lc.springBoot.druid.mapper");
             return mapperScannerConfigurer;
         }
     }
