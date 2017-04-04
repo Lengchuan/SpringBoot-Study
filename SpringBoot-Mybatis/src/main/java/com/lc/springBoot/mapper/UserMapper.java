@@ -16,7 +16,7 @@ public interface UserMapper {
 
 //    int delete(User user);
 
-    User getById(int userId);
+//    User getById(int userId);
 
-//    List<User> getBypage();
+    List<User> getBypage();
 }

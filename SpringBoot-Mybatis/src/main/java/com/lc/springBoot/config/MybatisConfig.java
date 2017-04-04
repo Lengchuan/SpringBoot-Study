@@ -1,5 +1,7 @@
 package com.lc.springBoot.config;
 
+import com.github.pagehelper.PageHelper;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 /**
  * @author lsj <lishuijun1992@gmail.com>
@@ -37,6 +40,18 @@ public class MybatisConfig {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         //配置mapper文件位置
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
+
+        //配置分页插件
+        PageHelper pageHelper = new PageHelper();
+        Properties properties = new Properties();
+        properties.setProperty("reasonable", "true");
+        properties.setProperty("supportMethodsArguments", "true");
+        properties.setProperty("returnPageInfo", "check");
+        properties.setProperty("params", "count=countSql");
+        pageHelper.setProperties(properties);
+
+        //设置插件
+        sqlSessionFactoryBean.setPlugins(new Interceptor[]{pageHelper});
         return sqlSessionFactoryBean.getObject();
     }
 

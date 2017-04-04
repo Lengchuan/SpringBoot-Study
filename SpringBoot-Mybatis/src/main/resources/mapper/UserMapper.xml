@@ -12,4 +12,7 @@
     <select id="getById" resultType="com.lc.springBoot.model.User">
         select * from user where userId = #{userId}
     </select>
+    <select id="getBypage" resultType="com.lc.springBoot.model.User">
+        SELECT * FROM user
+    </select>
 </mapper>
