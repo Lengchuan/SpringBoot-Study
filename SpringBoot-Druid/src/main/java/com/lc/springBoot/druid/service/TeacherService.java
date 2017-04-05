@@ -1,7 +1,7 @@
 package com.lc.springBoot.druid.service;
 
-import com.lc.springBoot.druid.mapper.cluster.ClassMapper;
-import com.lc.springBoot.druid.model.Class;
+import com.lc.springBoot.druid.mapper.cluster1.TeacherMapper;
+import com.lc.springBoot.druid.model.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
  * @date 17-4-4
  */
 @Service
-public class ClassService {
+public class TeacherService {
 
     @Autowired
-    private ClassMapper classMapper;
+    private TeacherMapper teacherMapper;
 
     @Transactional
-    public boolean createClass(Class c) {
-        classMapper.insert(c);
+    public boolean createTeacher(Teacher teacher) {
+        teacherMapper.insert(teacher);
         return true;
     }
 }

@@ -24,16 +24,16 @@ import java.util.Properties;
  * @date 17-4-4
  */
 @Configuration
-@MapperScan(basePackages = {"com.lc.springBoot.druid.mapper.cluster"},
-        sqlSessionFactoryRef = "clusterSqlSessionFactory")
-public class ClusterDruidDataSourceConfig {
+@MapperScan(basePackages = {"com.lc.springBoot.druid.mapper.cluster1"},
+        sqlSessionFactoryRef = "cluster1SqlSessionFactory")
+public class Cluster1DruidDataSourceConfig {
 
-    @Value("${spring.datasource.cluster.clusterMapperLocations}")
-    private String clusterMapperLocations;
+    @Value("${spring.datasource.cluster1.clusterMapperLocations}")
+    private String cluster1MapperLocations;
 
-    @ConfigurationProperties(prefix = "spring.datasource.cluster")
-    @Bean(name = "clusterDataSource")
-    public DataSource clusterDataSource() {
+    @ConfigurationProperties(prefix = "spring.datasource.cluster1")
+    @Bean(name = "cluster1DataSource")
+    public DataSource cluster1DataSource() {
         return new DruidDataSource();
     }
 
@@ -43,16 +43,16 @@ public class ClusterDruidDataSourceConfig {
      * @return
      * @throws Exception
      */
-    @Bean(name = "clusterSqlSessionFactory")
-    public SqlSessionFactory clusterSqlSessionFactory(
-            @Qualifier("clusterDataSource") DataSource dataSource
+    @Bean(name = "cluster1SqlSessionFactory")
+    public SqlSessionFactory cluster1SqlSessionFactory(
+            @Qualifier("cluster1DataSource") DataSource dataSource
     ) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
 
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         //配置mapper文件位置
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources(clusterMapperLocations));
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources(cluster1MapperLocations));
 
         //配置分页插件
         PageHelper pageHelper = new PageHelper();
@@ -73,9 +73,9 @@ public class ClusterDruidDataSourceConfig {
      *
      * @return
      */
-    @Bean(name = "clusterTransactionManager")
-    public DataSourceTransactionManager clusterTransactionManager(
-            @Qualifier("clusterDataSource") DataSource dataSource
+    @Bean(name = "cluster1TransactionManager")
+    public DataSourceTransactionManager cluster1TransactionManager(
+            @Qualifier("cluster1DataSource") DataSource dataSource
     ) {
         DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager();
         dataSourceTransactionManager.setDataSource(dataSource);

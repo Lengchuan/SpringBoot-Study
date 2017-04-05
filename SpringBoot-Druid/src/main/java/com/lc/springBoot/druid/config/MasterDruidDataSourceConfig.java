@@ -6,10 +6,12 @@ import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
@@ -32,6 +34,7 @@ public class MasterDruidDataSourceConfig {
 
     @ConfigurationProperties(prefix = "spring.datasource.master")
     @Bean(name = "masterDataSource")
+    @Primary
     public DataSource masterDataSource() {
         return new DruidDataSource();
     }
@@ -43,9 +46,12 @@ public class MasterDruidDataSourceConfig {
      * @throws Exception
      */
     @Bean(name = "masterSqlSessionFactory")
-    public SqlSessionFactory masterSqlSessionFactory() throws Exception {
+    @Primary
+    public SqlSessionFactory masterSqlSessionFactory(
+            @Qualifier("masterDataSource") DataSource dataSource
+    ) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(masterDataSource());
+        sqlSessionFactoryBean.setDataSource(dataSource);
 
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         // 配置mapper文件位置
@@ -71,9 +77,12 @@ public class MasterDruidDataSourceConfig {
      * @return
      */
     @Bean(name = "masterTransactionManager")
-    public DataSourceTransactionManager masterTransactionManager() {
+    @Primary
+    public DataSourceTransactionManager masterTransactionManager(
+            @Qualifier("masterDataSource") DataSource dataSource
+    ) {
         DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager();
-        dataSourceTransactionManager.setDataSource(masterDataSource());
+        dataSourceTransactionManager.setDataSource(dataSource);
         return dataSourceTransactionManager;
     }
 }
