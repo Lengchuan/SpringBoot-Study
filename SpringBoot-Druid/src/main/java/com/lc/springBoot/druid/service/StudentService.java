@@ -2,6 +2,7 @@ package com.lc.springBoot.druid.service;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.lc.springBoot.druid.ReadAndWrite.annotation.TargetDataSource;
 import com.lc.springBoot.druid.mapper.master.StudentMapper;
 import com.lc.springBoot.druid.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class StudentService {
     private StudentMapper studentMapper;
 
     @Transactional
+    @TargetDataSource(dataSource = "writeDataSource")
     public boolean createUser(Student student) {
         studentMapper.insert(student);
 
@@ -29,6 +31,7 @@ public class StudentService {
         return true;
     }
 
+    @TargetDataSource(dataSource = "read1DataSource")
     public List<Student> getByPage(int page, int rows) {
         Page<Student> studentPage = PageHelper.startPage(page, rows, true);
         List<Student> students = studentMapper.getBypage();

@@ -8,7 +8,7 @@ import java.util.Date;
  * @date 17-4-4
  */
 public class Student implements Serializable {
-    private Integer userId;
+    private Integer id;
 
     private String name;
 
@@ -18,12 +18,12 @@ public class Student implements Serializable {
 
     private Date birthday;
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

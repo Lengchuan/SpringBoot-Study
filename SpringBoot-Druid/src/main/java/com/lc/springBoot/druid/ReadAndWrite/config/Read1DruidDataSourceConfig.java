@@ -1,4 +1,4 @@
-package com.lc.springBoot.druid.config;
+package com.lc.springBoot.druid.ReadAndWrite.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.github.pagehelper.PageHelper;
@@ -18,22 +18,22 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
- * cluster1节点数据源配置
+ * read1节点数据源配置
  *
  * @author lsj <lishuijun1992@gmail.com>
  * @date 17-4-4
  */
 @Configuration
-@MapperScan(basePackages = {"com.lc.springBoot.druid.mapper.cluster1"},
-        sqlSessionFactoryRef = "cluster1SqlSessionFactory")
-public class Cluster1DruidDataSourceConfig {
+@MapperScan(basePackages = {"com.lc.springBoot.druid.mapper.read1"},
+        sqlSessionFactoryRef = "read1SqlSessionFactory")
+public class Read1DruidDataSourceConfig {
 
-    @Value("${spring.datasource.cluster1.clusterMapperLocations}")
-    private String cluster1MapperLocations;
+    @Value("${spring.datasource.read1.read1MapperLocations}")
+    private String read1MapperLocations;
 
-    @ConfigurationProperties(prefix = "spring.datasource.cluster1")
-    @Bean(name = "cluster1DataSource")
-    public DataSource cluster1DataSource() {
+    @ConfigurationProperties(prefix = "spring.datasource.read1")
+    @Bean(name = "read1DataSource")
+    public DataSource read1DataSource() {
         return new DruidDataSource();
     }
 
@@ -43,16 +43,16 @@ public class Cluster1DruidDataSourceConfig {
      * @return
      * @throws Exception
      */
-    @Bean(name = "cluster1SqlSessionFactory")
-    public SqlSessionFactory cluster1SqlSessionFactory(
-            @Qualifier("cluster1DataSource") DataSource dataSource
+    @Bean(name = "read1SqlSessionFactory")
+    public SqlSessionFactory read1SqlSessionFactory(
+            @Qualifier("read1DataSource") DataSource dataSource
     ) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
 
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        //配置mapper文件位置
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources(cluster1MapperLocations));
+        // 配置mapper文件位置
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources(read1MapperLocations));
 
         //配置分页插件
         PageHelper pageHelper = new PageHelper();
@@ -73,9 +73,9 @@ public class Cluster1DruidDataSourceConfig {
      *
      * @return
      */
-    @Bean(name = "cluster1TransactionManager")
-    public DataSourceTransactionManager cluster1TransactionManager(
-            @Qualifier("cluster1DataSource") DataSource dataSource
+    @Bean(name = "read1TransactionManager")
+    public DataSourceTransactionManager read1TransactionManager(
+            @Qualifier("read1DataSource") DataSource dataSource
     ) {
         DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager();
         dataSourceTransactionManager.setDataSource(dataSource);
