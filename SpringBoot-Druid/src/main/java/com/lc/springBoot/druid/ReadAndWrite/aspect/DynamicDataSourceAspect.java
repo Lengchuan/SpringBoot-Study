@@ -29,8 +29,6 @@ public class DynamicDataSourceAspect {
             DynamicDataSourceHolder.setDataSource(targetDataSource);
         }
         Object result = pjp.proceed();//执行方法
-        DynamicDataSourceHolder.clearDataSource();
-
         return result;
     }
 }

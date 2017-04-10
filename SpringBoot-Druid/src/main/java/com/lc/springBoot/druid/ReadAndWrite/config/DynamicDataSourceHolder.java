@@ -13,7 +13,7 @@ public class DynamicDataSourceHolder {
     }
 
     public static String getDataSource() {
-        return (String) dataSources.get();
+        return dataSources.get();
     }
 
     public static void clearDataSource() {

@@ -452,7 +452,7 @@
     ```
     
 ### 注解使用
-    ```aidl
+    ```
     @Service
     public class StudentService {
     
@@ -479,3 +479,79 @@
     }
 
     ```  
+## druid监控功能配置
+
+### 配置过滤器
+    ```
+    /**
+     * 配置过滤器,需要拦截哪些url,忽略哪些url,初始化参数等
+     *
+     * @author lsj <lishuijun1992@gmail.com>
+     * @date 17-4-7
+     */
+    @WebFilter(filterName = "druidStatFilter",//过滤器名称
+            urlPatterns = "/",//需要拦截的url
+            initParams = {//filter初始化信息
+                    //需要忽略的资源
+                    @WebInitParam(name = "exclusions", value = "*.js,*.gif,*.jpg," +
+                            "*.bmp,*.png,*.css,*.ico,/druid/*"),
+                    @WebInitParam(name = "sessionStatEnable", value = "true"),
+                    @WebInitParam(name = "profileEnable", value = "true")})
+    public class DruidStatFilter extends WebStatFilter {
+    }
+
+    ```
+
+### 配置servlet
+```
+//表明这是一个servlet
+@WebServlet(urlPatterns = "/druid/*",//通过哪个url访问
+        initParams = {
+                @WebInitParam(name = "loginUsername", value = "lengchuan"),//用户名
+                @WebInitParam(name = "loginPassword", value = "123456"), //密码
+                @WebInitParam(name = "resetEnable", value = "true"),//是否可以重置
+                // @WebInitParam(name = "allow",value = "127.0.0.1"),//白名单
+                // @WebInitParam(name = "deny",value = "192.168.1.1")//黑名单
+        })
+public class DruidStatViewServlet extends StatViewServlet {
+}
+
+```
+
+### 配置Spring监控
+```
+@Configuration
+public class MyDruidStatInterceptor {
+
+    private static final String[] patterns = new String[]{"com.lc.springBoot.druid.service.*"};
+
+    @Bean
+    public DruidStatInterceptor druidStatInterceptor() {
+        return new DruidStatInterceptor();
+    }
+
+    /**
+     * 切入点
+     * @return
+     */
+    @Bean
+    public JdkRegexpMethodPointcut druidStatPointcut() {
+        JdkRegexpMethodPointcut druidStatPointcut = new JdkRegexpMethodPointcut();
+        druidStatPointcut.setPatterns(patterns);
+        return druidStatPointcut;
+    }
+
+    /**
+     * 配置aop
+     * @return
+     */
+    @Bean
+    public Advisor druidStatAdvisor() {
+        return new DefaultPointcutAdvisor(druidStatPointcut(), druidStatInterceptor());
+    }
+}
+
+```
+### 访问监控页面
+    配置完成后启动项目,访问loccalhost:8080/druid/就可以看到我们的监控页面了,用户名配置的是lengchuan,密码是123456这里需要注意的是,我们只有在
+    执行了一次数据库操作后,才能获取到我们的数据源信息.

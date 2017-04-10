@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * @author lsj <lishuijun1992@gmail.com>
- * @date 17-4-5
+ * @date 17 -4-5
  */
 @Configuration
 public class DataSourceConfig {
@@ -20,12 +20,20 @@ public class DataSourceConfig {
     private final static String READ1_DATASOURCE_KEY = "read1DataSource";
     private final static String READ2_DATASOURCE_KEY = "read2DataSource";
 
+    /**
+     * 注入AbstractRoutingDataSource
+     * @param writeDataSource
+     * @param read1DataSource
+     * @param read2DataSource
+     * @return
+     * @throws Exception
+     */
     @Bean
     public AbstractRoutingDataSource routingDataSource(
-            @Qualifier("writeDataSource") DataSource  writeDataSource,
-            @Qualifier("read1DataSource") DataSource  read1DataSource,
-            @Qualifier("read2DataSource") DataSource  read2DataSource
-    ) {
+            @Qualifier("writeDataSource") DataSource writeDataSource,
+            @Qualifier("read1DataSource") DataSource read1DataSource,
+            @Qualifier("read2DataSource") DataSource read2DataSource
+    ) throws Exception {
         DynamicDataSource dataSource = new DynamicDataSource();
         Map<Object, Object> targetDataSources = new HashMap();
         targetDataSources.put(WRITE_DATASOURCE_KEY, writeDataSource);

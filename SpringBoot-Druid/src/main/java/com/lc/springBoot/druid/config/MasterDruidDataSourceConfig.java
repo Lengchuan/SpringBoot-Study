@@ -16,6 +16,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -36,7 +37,13 @@ public class MasterDruidDataSourceConfig {
     @Bean(name = "masterDataSource")
     @Primary
     public DataSource masterDataSource() {
-        return new DruidDataSource();
+        DruidDataSource dataSource = new DruidDataSource();
+        try {
+            dataSource.setFilters("stat,wall,log4j");
+        } catch (SQLException e) {
+            //
+        }
+        return dataSource;
     }
 
     /**
