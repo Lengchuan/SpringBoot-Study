@@ -16,6 +16,7 @@
         <module>SpringBoot-JuintTest</module>
         <module>SpringBoot-Mybatis</module>
         <module>SpringBoot-Druid</module>
+        <module>SpringBoot-SpringDataJPA</module>
     </modules>
 
 </project>
