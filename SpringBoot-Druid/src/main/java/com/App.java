@@ -17,7 +17,7 @@ import java.util.Date;
  * @date 17-4-4
  */
 @SpringBootApplication
-@ServletComponentScan("com.lc.springBoot.druid.monitor")//扫描servlet配置
+@ServletComponentScan("com.lc.springBoot.dataSource.monitor")//扫描servlet配置
 public class App implements CommandLineRunner {
 
     @Autowired

@@ -26,7 +26,7 @@ import java.util.Properties;
  * @date 17-4-4
  */
 @Configuration
-@MapperScan(basePackages = {"com.lc.springBoot.druid.mapper.master"},
+@MapperScan(basePackages = {"com.lc.springBoot.dataSource.mapper.master"},
         sqlSessionFactoryRef = "masterSqlSessionFactory")
 public class MasterDruidDataSourceConfig {
 

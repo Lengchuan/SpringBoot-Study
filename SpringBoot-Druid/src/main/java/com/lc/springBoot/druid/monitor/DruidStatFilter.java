@@ -16,7 +16,7 @@ import javax.servlet.annotation.WebInitParam;
         initParams = {//filter初始化信息
                 //需要忽略的资源
                 @WebInitParam(name = "exclusions", value = "*.js,*.gif,*.jpg," +
-                        "*.bmp,*.png,*.css,*.ico,/druid/*"),
+                        "*.bmp,*.png,*.css,*.ico,/dataSource/*"),
                 @WebInitParam(name = "sessionStatEnable", value = "true"),
                 @WebInitParam(name = "profileEnable", value = "true")})
 public class DruidStatFilter extends WebStatFilter {

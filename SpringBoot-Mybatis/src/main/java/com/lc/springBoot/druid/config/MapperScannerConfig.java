@@ -19,7 +19,7 @@ public class MapperScannerConfig {
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setBasePackage("com.lc.springBoot.druid.mapper");
+        mapperScannerConfigurer.setBasePackage("com.lc.springBoot.dataSource.mapper");
         return mapperScannerConfigurer;
     }
 }

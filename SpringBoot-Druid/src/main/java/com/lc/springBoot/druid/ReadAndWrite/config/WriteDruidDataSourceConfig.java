@@ -21,7 +21,7 @@ import javax.sql.DataSource;
  * @date 17-4-4
  */
 @Configuration
-@MapperScan(basePackages = {"com.lc.springBoot.druid.mapper.write"},
+@MapperScan(basePackages = {"com.lc.springBoot.dataSource.mapper.write"},
         sqlSessionFactoryRef = "writeSqlSessionFactory")
 public class WriteDruidDataSourceConfig {
 

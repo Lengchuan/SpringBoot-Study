@@ -2,7 +2,7 @@
 
 ## 引入依赖
 ```aidl
-<!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+<!-- https:dataSource
 <dependency>
     <groupId>com.alibaba</groupId>
     <artifactId>druid</artifactId>

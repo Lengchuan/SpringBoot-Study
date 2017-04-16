@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MyDruidStatInterceptor {
 
-    private static final String[] patterns = new String[]{"com.lc.springBoot.druid.service.*"};
+    private static final String[] patterns = new String[]{"com.lc.springBoot.dataSource.service.*"};
 
     @Bean
     public DruidStatInterceptor druidStatInterceptor() {

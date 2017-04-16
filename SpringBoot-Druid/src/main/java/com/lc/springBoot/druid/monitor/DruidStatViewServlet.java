@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebServlet;
  * @date 17-4-7
  */
 //表明这是一个servlet
-@WebServlet(urlPatterns = "/druid/*",//通过哪个url访问
+@WebServlet(urlPatterns = "/dataSource/*",//通过哪个url访问
         initParams = {
                 @WebInitParam(name = "loginUsername", value = "lengchuan"),//用户名
                 @WebInitParam(name = "loginPassword", value = "123456"), //密码

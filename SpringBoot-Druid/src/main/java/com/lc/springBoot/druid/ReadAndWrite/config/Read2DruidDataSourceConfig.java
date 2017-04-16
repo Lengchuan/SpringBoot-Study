@@ -24,7 +24,7 @@ import java.util.Properties;
  * @date 17-4-4
  */
 @Configuration
-@MapperScan(basePackages = {"com.lc.springBoot.druid.mapper.read2"},
+@MapperScan(basePackages = {"com.lc.springBoot.dataSource.mapper.read2"},
         sqlSessionFactoryRef = "read2SqlSessionFactory")
 public class Read2DruidDataSourceConfig {
 

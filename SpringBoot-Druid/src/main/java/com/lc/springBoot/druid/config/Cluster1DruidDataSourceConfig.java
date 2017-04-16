@@ -24,7 +24,7 @@ import java.util.Properties;
  * @date 17-4-4
  */
 @Configuration
-@MapperScan(basePackages = {"com.lc.springBoot.druid.mapper.cluster1"},
+@MapperScan(basePackages = {"com.lc.springBoot.dataSource.mapper.cluster1"},
         sqlSessionFactoryRef = "cluster1SqlSessionFactory")
 public class Cluster1DruidDataSourceConfig {
 
