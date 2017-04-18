@@ -252,29 +252,34 @@ getObject(),不然会获取不到,报空指针异常.
 
 ### 自定义注入AbstractRoutingDataSource
 ```
-    @Configuration
-    public class DataSourceConfig {
-    
-        private final static String WRITE_DATASOURCE_KEY = "writeDataSource";
-        private final static String READ1_DATASOURCE_KEY = "read1DataSource";
-        private final static String READ2_DATASOURCE_KEY = "read2DataSource";
-    
-        @Bean
-        public AbstractRoutingDataSource routingDataSource(
-                @Qualifier("writeDataSource") DataSource  writeDataSource,
-                @Qualifier("read1DataSource") DataSource  read1DataSource,
-                @Qualifier("read2DataSource") DataSource  read2DataSource
-        ) {
-            DynamicDataSource dataSource = new DynamicDataSource();
-            Map<Object, Object> targetDataSources = new HashMap();
-            targetDataSources.put(WRITE_DATASOURCE_KEY, writeDataSource);
-            targetDataSources.put(READ1_DATASOURCE_KEY, read1DataSource);
-            targetDataSources.put(READ2_DATASOURCE_KEY, read2DataSource);
-            dataSource.setTargetDataSources(targetDataSources);
-            dataSource.setDefaultTargetDataSource(writeDataSource);
-            return dataSource;
-        }
-    }
+ @Configuration
+ public class DataSourceConfig {
+ 
+     private final static String WRITE_DATASOURCE_KEY = "writeDruidDataSource";
+     private final static String READ_DATASOURCE_KEY = "readDruidDataSource";
+ 
+     /**
+      * 注入AbstractRoutingDataSource
+      * @param readDruidDataSource
+      * @param writeDruidDataSource
+      * @return
+      * @throws Exception
+      */
+     @Bean
+     public AbstractRoutingDataSource routingDataSource(
+             @Qualifier(READ_DATASOURCE_KEY) DataSource readDruidDataSource,
+             @Qualifier(WRITE_DATASOURCE_KEY) DataSource writeDruidDataSource
+     ) throws Exception {
+         DynamicDataSource dataSource = new DynamicDataSource();
+ 
+         Map<Object, Object> targetDataSources = new HashMap();
+         targetDataSources.put(WRITE_DATASOURCE_KEY, writeDruidDataSource);
+         targetDataSources.put(READ_DATASOURCE_KEY, readDruidDataSource);
+         dataSource.setTargetDataSources(targetDataSources);
+         dataSource.setDefaultTargetDataSource(writeDruidDataSource);
+         return dataSource;
+     }
+ }
 ```
     
 ### 自定义注解
