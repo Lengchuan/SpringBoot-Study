@@ -42,5 +42,306 @@ Spring Data JPA只是Spring Data框架的一个模块,可以极大的简化JPA�
 
 ## 配置我们的数据源以及JPA(Hibernate)
 ```aidl
+#配置模板
+#https://docs.spring.io/spring-boot/docs/1.4.0.RELEASE/reference/html/common-application-properties.html
+
+#数据源
+spring.datasource.druid.write.url=jdbc:mysql://localhost:3306/jpa
+spring.datasource.druid.write.username=root
+spring.datasource.druid.write.password=1
+spring.datasource.druid.write.driver-class-name=com.mysql.jdbc.Driver
+
+spring.datasource.druid.read.url=jdbc:mysql://localhost:3306/jpa
+spring.datasource.druid.read.username=root
+spring.datasource.druid.read.password=1
+spring.datasource.druid.read.driver-class-name=com.mysql.jdbc.Driver
+
+#JPA (JpaBaseConfiguration, HibernateJpaAutoConfiguration)
+spring.jpa.database-platform=org.hibernate.dialect.MySQL5Dialect
+spring.jpa.database=mysql
+spring.jpa.generate-ddl=true
+#就是hibernate.hbm2ddl.auto,具体说明可以看README
+spring.jpa.hibernate.ddl-auto=update
+#通过方法名解析sql的策略,具体说明可以看README,这里就不配置了
+spring.jpa.hibernate.naming-strategy=org.hibernate.cfg.DefaultComponentSafeNamingStrategy
+spring.jpa.show-sql=true
+#spring.jpa.properties.*
+#spring.jpa.properties.hibernate.hbm2ddl.auto=update
+#spring.jpa.properties.hibernate.show_sql=true
+#spring.jpa.properties.hibernate.use-new-id-generator-mappings=true
+```
+
+## druid数据源注入
+```aidl
+@Configuration
+public class DruidDataSourceConfig {
+    /**
+     * DataSource 配置
+     * @return
+     */
+    @ConfigurationProperties(prefix = "spring.datasource.druid.read")
+    @Bean(name = "readDruidDataSource")
+    public DataSource readDruidDataSource() {
+        return new DruidDataSource();
+    }
+
+
+    /**
+     * DataSource 配置
+     * @return
+     */
+    @ConfigurationProperties(prefix = "spring.datasource.druid.write")
+    @Bean(name = "writeDruidDataSource")
+    @Primary
+    public DataSource writeDruidDataSource() {
+        return new DruidDataSource();
+    }
+}
+
+```
+
+## EntityManagerFactory实例注入
+EntityManagerFactory类似于Hibernate的SessionFactory,mybatis的SqlSessionFactory
+总之,在执行操作之前,我们总要获取一个EntityManager,这就类似于Hibernate的Session,
+mybatis的sqlSession.
+注入EntityManagerFactory有两种方式,一种是直接注入EntityManagerFactory,另一种是通过
+LocalContainerEntityManagerFactoryBean来间接注入.虽说这两种方法都是基于
+LocalContainerEntityManagerFactoryBean的,但是在配置上还是有一些区别.
+
++ 1.直接注入EntityManagerFactory
+
+配置:通过spring.jpa.properties.*来配置Hibernate的属性
+```aidl
+spring.jpa.properties.hibernate.hbm2ddl.auto=update
+spring.jpa.properties.hibernate.show_sql=true
+spring.jpa.properties.hibernate.use-new-id-generator-mappings=true
+```
+```aidl
+@Configuration
+@EnableJpaRepositories(value = "com.lc.springBoot.jpa.repository",
+                        entityManagerFactoryRef = "writeEntityManagerFactory",
+                        transactionManagerRef="writeTransactionManager")
+public class WriteDataSourceConfig {
+
+    @Autowired
+    JpaProperties jpaProperties;
+
+    @Autowired
+    @Qualifier("writeDruidDataSource")
+    private DataSource writeDruidDataSource;
+
+    /**
+     * EntityManagerFactory类似于Hibernate的SessionFactory,mybatis的SqlSessionFactory
+     * 总之,在执行操作之前,我们总要获取一个EntityManager,这就类似于Hibernate的Session,
+     * mybatis的sqlSession.
+     * @return
+     */
+    @Bean(name = "writeEntityManagerFactory")
+    @Primary
+    public EntityManagerFactory writeEntityManagerFactory() {
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("com.lc.springBoot.jpa.entity");
+        factory.setDataSource(writeDruidDataSource);//数据源
+
+        factory.setJpaPropertyMap(jpaProperties.getProperties());
+        factory.afterPropertiesSet();//在完成了其它所有相关的配置加载以及属性设置后,才初始化
+        return factory.getObject();
+    }
+
+    /**
+     * 配置事物管理器
+     * @return
+     */
+    @Bean(name = "writeTransactionManager")
+    @Primary
+    public PlatformTransactionManager writeTransactionManager() {
+        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
+        jpaTransactionManager.setEntityManagerFactory(this.writeEntityManagerFactory());
+        return jpaTransactionManager;
+    }
+}
+```
++ 2.先注入LocalContainerEntityManagerFactoryBean,再获取EntityManagerFactory
+
+配置:
+```aidl
+spring.jpa.database-platform=org.hibernate.dialect.MySQL5Dialect
+spring.jpa.database=mysql
+spring.jpa.generate-ddl=true
+#就是hibernate.hbm2ddl.auto,具体说明可以看README
+spring.jpa.hibernate.ddl-auto=update
+#通过方法名解析sql的策略,具体说明可以看README,这里就不配置了
+spring.jpa.hibernate.naming-strategy=org.hibernate.cfg.DefaultComponentSafeNamingStrategy
+spring.jpa.show-sql=true
+```
+```aidl
+@Configuration
+@EnableJpaRepositories(value = "com.lc.springBoot.jpa.repository",
+        entityManagerFactoryRef = "writeEntityManagerFactory",
+        transactionManagerRef = "writeTransactionManager")
+public class WriteDataSourceConfig1 {
+
+    @Autowired
+    JpaProperties jpaProperties;
+
+    @Autowired
+    @Qualifier("writeDruidDataSource")
+    private DataSource writeDruidDataSource;
+
+    /**
+     * 我们通过LocalContainerEntityManagerFactoryBean来获取EntityManagerFactory实例
+     * @return
+     */
+    @Bean(name = "writeEntityManagerFactoryBean")
+    @Primary
+    public LocalContainerEntityManagerFactoryBean writeEntityManagerFactoryBean(EntityManagerFactoryBuilder builder) {
+        return builder
+                .dataSource(writeDruidDataSource)
+                .properties(jpaProperties.getProperties())
+                .packages("com.lc.springBoot.jpa.entity") //设置实体类所在位置
+                .persistenceUnit("writePersistenceUnit")
+                .build();
+        //.getObject();//不要在这里直接获取EntityManagerFactory
+    }
+
+    /**
+     * EntityManagerFactory类似于Hibernate的SessionFactory,mybatis的SqlSessionFactory
+     * 总之,在执行操作之前,我们总要获取一个EntityManager,这就类似于Hibernate的Session,
+     * mybatis的sqlSession.
+     * @param builder
+     * @return
+     */
+    @Bean(name = "writeEntityManagerFactory")
+    @Primary
+    public EntityManagerFactory writeEntityManagerFactory(EntityManagerFactoryBuilder builder) {
+        return this.writeEntityManagerFactoryBean(builder).getObject();
+    }
+
+    /**
+     * 配置事物管理器
+     * @return
+     */
+    @Bean(name = "writeTransactionManager")
+    @Primary
+    public PlatformTransactionManager writeTransactionManager(EntityManagerFactoryBuilder builder) {
+        return new JpaTransactionManager(writeEntityManagerFactory(builder));
+    }
+}
+
+```
+对于这个配置
+```aidl
+   @Bean(name = "writeEntityManagerFactoryBean")
+    @Primary
+    public LocalContainerEntityManagerFactoryBean writeEntityManagerFactoryBean(EntityManagerFactoryBuilder builder) {
+        return builder
+                .dataSource(writeDruidDataSource)
+                .properties(jpaProperties.getProperties())
+                .packages("com.lc.springBoot.jpa.entity") //设置实体类所在位置
+                .persistenceUnit("writePersistenceUnit")
+                .build();
+        //.getObject();//不要在这里直接获取EntityManagerFactory
+    }
+```
+getObject()方法可以获取到EntityManagerFactory的实例,看似跟第一种没有什么区别,但是我们不能直接用
+getObject(),不然会获取不到,报空指针异常.
+
+## 读写分离配置
+
+### 自定义注入AbstractRoutingDataSource
+```
+    @Configuration
+    public class DataSourceConfig {
+    
+        private final static String WRITE_DATASOURCE_KEY = "writeDataSource";
+        private final static String READ1_DATASOURCE_KEY = "read1DataSource";
+        private final static String READ2_DATASOURCE_KEY = "read2DataSource";
+    
+        @Bean
+        public AbstractRoutingDataSource routingDataSource(
+                @Qualifier("writeDataSource") DataSource  writeDataSource,
+                @Qualifier("read1DataSource") DataSource  read1DataSource,
+                @Qualifier("read2DataSource") DataSource  read2DataSource
+        ) {
+            DynamicDataSource dataSource = new DynamicDataSource();
+            Map<Object, Object> targetDataSources = new HashMap();
+            targetDataSources.put(WRITE_DATASOURCE_KEY, writeDataSource);
+            targetDataSources.put(READ1_DATASOURCE_KEY, read1DataSource);
+            targetDataSources.put(READ2_DATASOURCE_KEY, read2DataSource);
+            dataSource.setTargetDataSources(targetDataSources);
+            dataSource.setDefaultTargetDataSource(writeDataSource);
+            return dataSource;
+        }
+    }
+```
+    
+### 自定义注解
+```
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    public @interface TargetDataSource {
+        String dataSource() default "";//数据源
+    }
+
+```
+
+    
+### 使用ThreadLocal使数据源与线程绑定
+```
+    public class DynamicDataSourceHolder {
+        //使用ThreadLocal把数据源与当前线程绑定
+        private static final ThreadLocal<String> dataSources = new ThreadLocal<String>();
+    
+        public static void setDataSource(String dataSourceName) {
+            dataSources.set(dataSourceName);
+        }
+    
+        public static String getDataSource() {
+            return (String) dataSources.get();
+        }
+    
+        public static void clearDataSource() {
+            dataSources.remove();
+        }
+    }
+```
+
+```
+    public class DynamicDataSource extends AbstractRoutingDataSource {
+        @Override
+        protected Object determineCurrentLookupKey() {
+    
+            //可以做一个简单的负载均衡策略
+            String lookupKey = DynamicDataSourceHolder.getDataSource();
+            System.out.println("------------lookupKey---------"+lookupKey);
+    
+            return lookupKey;
+        }
+    }
+```
+
+### 定义切面
+```
+    @Aspect
+    @Component
+    public class DynamicDataSourceAspect {
+        @Around("execution(public * com.lc.springBoot.druid.service..*.*(..))")
+        public Object around(ProceedingJoinPoint pjp) throws Throwable {
+            MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
+            Method targetMethod = methodSignature.getMethod();
+            if (targetMethod.isAnnotationPresent(TargetDataSource.class)) {
+                String targetDataSource = targetMethod.getAnnotation(TargetDataSource.class).dataSource();
+                System.out.println("----------数据源是:" + targetDataSource + "------");
+                DynamicDataSourceHolder.setDataSource(targetDataSource);
+            }
+            Object result = pjp.proceed();//执行方法
+            DynamicDataSourceHolder.clearDataSource();
+    
+            return result;
+        }
+    }
 
 ```

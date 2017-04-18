@@ -19,9 +19,6 @@ package com.lc.springBoot.jpa.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * 这里就偷个懒,直接用官方的
- */
 @Entity
 @Table(name = "city")
 public class City implements Serializable {
@@ -29,7 +26,7 @@ public class City implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(nullable = false, unique = true, length = 64)

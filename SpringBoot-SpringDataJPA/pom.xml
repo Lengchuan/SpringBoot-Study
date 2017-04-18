@@ -13,7 +13,6 @@
     <artifactId>SpringBoot-SpringDataJPA</artifactId>
     <packaging>jar</packaging>
 
-
     <dependencyManagement>
         <dependencies>
             <dependency>

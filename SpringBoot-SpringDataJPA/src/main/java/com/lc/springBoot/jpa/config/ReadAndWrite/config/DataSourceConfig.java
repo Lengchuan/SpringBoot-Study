@@ -16,8 +16,8 @@ import java.util.Map;
 @Configuration
 public class DataSourceConfig {
 
-    private final static String WRITE_DATASOURCE_KEY = "readDruidDataSource";
-    private final static String READ_DATASOURCE_KEY = "writeDruidDataSource";
+    private final static String WRITE_DATASOURCE_KEY = "writeDruidDataSource";
+    private final static String READ_DATASOURCE_KEY = "readDruidDataSource";
 
     /**
      * 注入AbstractRoutingDataSource
