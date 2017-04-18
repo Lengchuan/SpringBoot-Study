@@ -328,7 +328,7 @@ getObject(),不然会获取不到,报空指针异常.
     @Aspect
     @Component
     public class DynamicDataSourceAspect {
-        @Around("execution(public * com.lc.springBoot.druid.service..*.*(..))")
+        @Around("execution(public * com.lc.springBoot.jpa.service..*.*(..))")
         public Object around(ProceedingJoinPoint pjp) throws Throwable {
             MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
             Method targetMethod = methodSignature.getMethod();
