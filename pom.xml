@@ -17,6 +17,7 @@
         <module>SpringBoot-Mybatis</module>
         <module>SpringBoot-Druid</module>
         <module>SpringBoot-SpringDataJPA</module>
+        <module>SpringBoot-Redis</module>
     </modules>
 
 </project>
