@@ -47,8 +47,3 @@ public interface RedisSerializer<T> {
 ```
 RedisSerializer只有两个接口需要我们去实现,默认的实现有StringRedisSerializer(默认),
 JdkSerializationRedisSerializer,JacksonJsonRedisSerializer,Jackson2JsonRedisSerializer,OxmSerializer.
-
-### 4.1基于FastJson实现我们自己的RedisSerializer
-```aidl
-
-```
