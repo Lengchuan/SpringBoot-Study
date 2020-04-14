@@ -7,7 +7,7 @@
   <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.0.RELEASE</version>
+        <version>2.2.6.RELEASE</version>
     </parent>
 ```
 但是这里也有一个问题,如果我们已经有一个自己的parent,那么我们就不能在这么引用了.我们可以使用下面的方式:
@@ -18,7 +18,7 @@
                 <!-- Import dependency management from Spring Boot -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>1.4.0.RELEASE</version>
+                <version>2.2.6.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -101,6 +101,5 @@ java -jar target/SpringBoot-HelloWorld-2-1.0-SNAPSHOT.jar
 ## 相关注解
 + 1.@SpringBootApplication可以自动进行一些必要的默认配置,等价于@Configuration,@EnableAutoConfiguration和@ComponentScan
     这三个注解.
-+ 2.RestController我们可以直接返回json,当然,从名字我们也知道可以直接用来编写RESTTUL风格的接口,要注意的是这个注解相当于一个@ResponseBody
++ 2.RestController我们可以直接返回json,当然,从名字我们也知道可以直接用来编写`restfull`风格的接口,要注意的是这个注解相当于一个@ResponseBody
     注解,我们只能返回json,不能返回View了.
-

@@ -43,7 +43,7 @@ Spring Data JPA只是Spring Data框架的一个模块,可以极大的简化JPA�
 ## 配置我们的数据源以及JPA(Hibernate)
 ```aidl
 #配置模板
-#https://docs.spring.io/spring-boot/docs/1.4.0.RELEASE/reference/html/common-application-properties.html
+#https://docs.spring.io/spring-boot/docs/${springboot.version}/reference/html/common-application-properties.html
 
 #数据源
 spring.datasource.druid.write.url=jdbc:mysql://localhost:3306/jpa
@@ -118,7 +118,7 @@ spring.jpa.properties.hibernate.use-new-id-generator-mappings=true
 ```
 ```aidl
 @Configuration
-@EnableJpaRepositories(value = "com.lc.springBoot.jpa.repository",
+@EnableJpaRepositories(value = "com.lengchuan.springBoot.jpa.repository",
                         entityManagerFactoryRef = "writeEntityManagerFactory",
                         transactionManagerRef="writeTransactionManager")
 public class WriteDataSourceConfig {
@@ -142,7 +142,7 @@ public class WriteDataSourceConfig {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.lc.springBoot.jpa.entity");
+        factory.setPackagesToScan("com.lengchuan.springBoot.jpa.entity");
         factory.setDataSource(writeDruidDataSource);//数据源
 
         factory.setJpaPropertyMap(jpaProperties.getProperties());
@@ -178,7 +178,7 @@ spring.jpa.show-sql=true
 ```
 ```aidl
 @Configuration
-@EnableJpaRepositories(value = "com.lc.springBoot.jpa.repository",
+@EnableJpaRepositories(value = "com.lengchuan.springBoot.jpa.repository",
         entityManagerFactoryRef = "writeEntityManagerFactory",
         transactionManagerRef = "writeTransactionManager")
 public class WriteDataSourceConfig1 {
@@ -200,7 +200,7 @@ public class WriteDataSourceConfig1 {
         return builder
                 .dataSource(writeDruidDataSource)
                 .properties(jpaProperties.getProperties())
-                .packages("com.lc.springBoot.jpa.entity") //设置实体类所在位置
+                .packages("com.lengchuan.springBoot.jpa.entity") //设置实体类所在位置
                 .persistenceUnit("writePersistenceUnit")
                 .build();
         //.getObject();//不要在这里直接获取EntityManagerFactory
@@ -239,7 +239,7 @@ public class WriteDataSourceConfig1 {
         return builder
                 .dataSource(writeDruidDataSource)
                 .properties(jpaProperties.getProperties())
-                .packages("com.lc.springBoot.jpa.entity") //设置实体类所在位置
+                .packages("com.lengchuan.springBoot.jpa.entity") //设置实体类所在位置
                 .persistenceUnit("writePersistenceUnit")
                 .build();
         //.getObject();//不要在这里直接获取EntityManagerFactory
@@ -333,7 +333,7 @@ getObject(),不然会获取不到,报空指针异常.
     @Aspect
     @Component
     public class DynamicDataSourceAspect {
-        @Around("execution(public * com.lc.springBoot.jpa.service..*.*(..))")
+        @Around("execution(public * com.lengchuan.springBoot.jpa.service..*.*(..))")
         public Object around(ProceedingJoinPoint pjp) throws Throwable {
             MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
             Method targetMethod = methodSignature.getMethod();

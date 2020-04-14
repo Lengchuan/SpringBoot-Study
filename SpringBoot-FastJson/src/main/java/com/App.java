@@ -1,13 +1,13 @@
 package com;
 
-import com.lc.springBoot.converter.EncrypConverter;
+import com.lengchuan.springBoot.converter.EncrypConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 
 /**
- * @author lsj <lishuijun1992@gmail.com>
+ * @author lengchuan <lishuijun1992@gmail.com>
  * @date 17-3-28
  */
 @SpringBootApplication

@@ -1,9 +1,9 @@
 package com;
 
-import com.lc.springBoot.druid.model.Class;
-import com.lc.springBoot.druid.model.Student;
-import com.lc.springBoot.druid.service.ClassService;
-import com.lc.springBoot.druid.service.StudentService;
+import com.lengchuan.springBoot.druid.model.Class;
+import com.lengchuan.springBoot.druid.model.Student;
+import com.lengchuan.springBoot.druid.service.ClassService;
+import com.lengchuan.springBoot.druid.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,11 +13,11 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import java.util.Date;
 
 /**
- * @author lsj <lishuijun1992@gmail.com>
+ * @author lengchuan <lishuijun1992@gmail.com>
  * @date 17-4-4
  */
 @SpringBootApplication
-@ServletComponentScan("com.lc.springBoot.dataSource.monitor")//扫描servlet配置
+@ServletComponentScan("com.lengchuan.springBoot.dataSource.monitor")//扫描servlet配置
 public class App implements CommandLineRunner {
 
     @Autowired

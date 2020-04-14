@@ -41,7 +41,7 @@
     master数据源:
     ```aidl
     @Configuration
-    @MapperScan(basePackages = {"com.lc.springBoot.druid.mapper.master"},
+    @MapperScan(basePackages = {"com.lengchuan.springBoot.druid.mapper.master"},
             sqlSessionFactoryRef = "masterSqlSessionFactory")
     public class MasterDruidDataSourceConfig {
     
@@ -107,7 +107,7 @@
     cluster数据源:
     ```aidl
     @Configuration
-    @MapperScan(basePackages = {"com.lc.springBoot.druid.mapper.cluster"},
+    @MapperScan(basePackages = {"com.lengchuan.springBoot.druid.mapper.cluster"},
             sqlSessionFactoryRef = "clusterSqlSessionFactory")
     public class ClusterDruidDataSourceConfig {
     
@@ -170,7 +170,7 @@
     cluster1数据源:
     ```aidl
     @Configuration
-    @MapperScan(basePackages = {"com.lc.springBoot.druid.mapper.cluster1"},
+    @MapperScan(basePackages = {"com.lengchuan.springBoot.druid.mapper.cluster1"},
             sqlSessionFactoryRef = "cluster1SqlSessionFactory")
     public class Cluster1DruidDataSourceConfig {
     
@@ -246,7 +246,7 @@
 ### read数据源配置
     ```
     @Configuration
-    @MapperScan(basePackages = {"com.lc.springBoot.druid.mapper.read1"},
+    @MapperScan(basePackages = {"com.lengchuan.springBoot.druid.mapper.read1"},
             sqlSessionFactoryRef = "read1SqlSessionFactory")
     public class Read1DruidDataSourceConfig {
     
@@ -310,7 +310,7 @@
 ### write数据源配置
     ```
     @Configuration
-    @MapperScan(basePackages = {"com.lc.springBoot.druid.mapper.write"},
+    @MapperScan(basePackages = {"com.lengchuan.springBoot.druid.mapper.write"},
             sqlSessionFactoryRef = "writeSqlSessionFactory")
     public class WriteDruidDataSourceConfig {
     
@@ -433,7 +433,7 @@
     @Aspect
     @Component
     public class DynamicDataSourceAspect {
-        @Around("execution(public * com.lc.springBoot.druid.service..*.*(..))")
+        @Around("execution(public * com.lengchuan.springBoot.druid.service..*.*(..))")
         public Object around(ProceedingJoinPoint pjp) throws Throwable {
             MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
             Method targetMethod = methodSignature.getMethod();
@@ -486,7 +486,7 @@
     /**
      * 配置过滤器,需要拦截哪些url,忽略哪些url,初始化参数等
      *
-     * @author lsj <lishuijun1992@gmail.com>
+     * @author lengchuan <lishuijun1992@gmail.com>
      * @date 17-4-7
      */
     @WebFilter(filterName = "druidStatFilter",//过滤器名称
@@ -523,7 +523,7 @@ public class DruidStatViewServlet extends StatViewServlet {
 @Configuration
 public class MyDruidStatInterceptor {
 
-    private static final String[] patterns = new String[]{"com.lc.springBoot.druid.service.*"};
+    private static final String[] patterns = new String[]{"com.lengchuan.springBoot.druid.service.*"};
 
     @Bean
     public DruidStatInterceptor druidStatInterceptor() {

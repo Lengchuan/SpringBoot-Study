@@ -4,8 +4,8 @@
 + 1.@ControllerAdvice()注解可以定义一个统一的异常处理类,我们可以定义多个统一异常处理类,
     但这里我们需要注意一点,默认的@ControllerAdvice()会处理所有的controller层抛出的异常,
     如果我们需要对不同的包进行不同的异常处理,比如pc端我们要返回一个jsp页面,app端我们需要返回
-    一个json,这时候我们可以通过配置如:@ControllerAdvice("com.lc.xxx")或者
-    @ControllerAdvice(basePackages="com.lc1.xxx,com.lc2.xxx")来对不同包的异常进行处理.
+    一个json,这时候我们可以通过配置如:@ControllerAdvice("com.lengchuan.xxx")或者
+    @ControllerAdvice(basePackages="com.lengchuan1.xxx,com.lengchuan2.xxx")来对不同包的异常进行处理.
  
 ## @ExceptionHandler()注解
 + 1.@ExceptionHandler()注解用在方法上,用来处理具体的某一中或某一类异常,比如@ExceptionHandler(Exception.class)
